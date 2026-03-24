@@ -29,19 +29,32 @@
 {{ $all := $pinned | append $rest }}
 
 <header class="site-header">
-  <span class="site-title">bobcat
-  <div class="search-row">
+  <span class="site-title">bobcat</span>
+  <span class="search-row">
     <input type="text" id="search" placeholder="search links..." autocomplete="off" />
     <span id="search-count"></span>
-  </div></span>
+  </span>
 </header>
 
 <div class="layout">
-  <nav class="sidebar">
-    {{ range $all }}
-    <a href="#{{ .category | urlize }}">{{ .category }}</a>
-    {{ end }}
-  </nav>
+    <nav class="sidebar">
+      <div class="sidebar-heading">Categories</div>
+      {{ range $all }}
+      <a href="#{{ .category | urlize }}">{{ .category }}</a>
+      {{ end }}
+
+      <div class="sidebar-heading" style="margin-top: 12px;">Recently Added</div>
+      {{ $recent := slice }}
+      {{ range $all }}
+        {{ range .link }}
+          {{ $recent = $recent | append . }}
+        {{ end }}
+      {{ end }}
+      {{ $recent = sort $recent "added" "desc" }}
+      {{ range first 5 $recent }}
+      <a href="{{ .url }}" class="sidebar-recent">{{ .title }}</a>
+      {{ end }}
+    </nav>
 
   <main class="main">
     {{ range $all }}
@@ -65,6 +78,24 @@
     {{ end }}
   </main>
 </div>
+
+{{ $total_links := 0 }}
+{{ range $all }}
+  {{ $total_links = add $total_links (len .link) }}
+{{ end }}
+
+{{ $dead_count := 0 }}
+{{ range $file, $errors := (getJSON "static/dead_links.json").error_map }}
+  {{ $dead_count = add $dead_count (len $errors) }}
+{{ end }}
+
+<footer class="site-footer">
+  <span>Last updated: {{ now.Format "2006-01-02" }}</span>
+  <span>·</span>
+  <span>{{ $total_links }} {{ if eq $total_links 1 }}link{{ else }}links{{ end }}</span>
+  <span>·</span>
+  <span>{{ $dead_count }} dead</span>
+</footer>
 
 <script>
 const _categories = {{ $all | jsonify | safeJS }};
