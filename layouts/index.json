@@ -1,0 +1,7 @@
+{{- $all := slice -}}
+{{- range $name, $file := .Site.Data.links -}}
+  {{- range $file.link -}}
+    {{- $all = $all | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $all | jsonify -}}

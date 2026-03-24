@@ -1,0 +1,119 @@
+{{ define "main" }}
+
+{{ $dead := dict }}
+{{ if fileExists "static/dead_links.json" }}
+  {{ $json := getJSON "static/dead_links.json" }}
+  {{ range $file, $errors := $json.error_map }}
+    {{ range $errors }}
+      {{ $dead = merge $dead (dict .url true) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $data := slice }}
+{{ range $name, $file := .Site.Data.links }}
+  {{ $data = $data | append $file }}
+{{ end }}
+
+{{ $pinned := slice }}
+{{ $rest := slice }}
+{{ range $data }}
+  {{ if .pinned }}
+    {{ $pinned = $pinned | append . }}
+  {{ else }}
+    {{ $rest = $rest | append . }}
+  {{ end }}
+{{ end }}
+
+{{ $rest = sort $rest "category" }}
+{{ $all := $pinned | append $rest }}
+
+<header class="site-header">
+  <span class="site-title">bobcat
+  <div class="search-row">
+    <input type="text" id="search" placeholder="search links..." autocomplete="off" />
+    <span id="search-count"></span>
+  </div></span>
+</header>
+
+<div class="layout">
+  <nav class="sidebar">
+    {{ range $all }}
+    <a href="#{{ .category | urlize }}">{{ .category }}</a>
+    {{ end }}
+  </nav>
+
+  <main class="main">
+    {{ range $all }}
+    <section class="section" id="{{ .category | urlize }}">
+      <div class="section-header">
+        <span class="section-title">{{ .category }}</span>
+        <span class="section-count">{{ len .link }} links</span>
+      </div>
+      <div class="link-grid">
+        {{ range .link }}
+        <div class="link-item" data-title="{{ .title }}">
+          <a href="{{ .url }}">{{ .title }}</a>
+          {{ if index $dead .url }}
+          <span class="skull" title="dead link">☠</span>
+          {{ end }}
+          <div class="desc">{{ .desc }}</div>
+        </div>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+  </main>
+</div>
+
+<script>
+const _categories = {{ $all | jsonify | safeJS }};
+const _search_data = _categories.flatMap(c => c.link);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script>
+const fuse = new Fuse(_search_data, {
+  keys: ['title', 'desc', 'tags'],
+  threshold: 0.3
+});
+const input = document.getElementById('search');
+const count = document.getElementById('search-count');
+const items = document.querySelectorAll('.link-item');
+
+input.addEventListener('input', function() {
+  const q = this.value.trim();
+  console.log('query:', q);
+  if (!q) {
+    items.forEach(el => el.style.display = '');
+    document.querySelectorAll('.section').forEach(section => {
+      const total = section.querySelectorAll('.link-item').length;
+      const link_label = visible_count === 1 ? 'link' : 'links';
+      section.querySelector('.section-count').textContent = total + ' ' + link_label;
+    });
+    count.textContent = '';
+    return;
+  }
+  const results = fuse.search(q).map(r => r.item.title);
+  console.log('results:', results);
+  let found = 0;
+  items.forEach(el => {
+    if (results.includes(el.dataset.title)) {
+      el.style.display = '';
+      found++;
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  const result_label = found === 1 ? 'result' : 'results';
+  count.textContent = found + ' ' + result_label;
+  document.querySelectorAll('.section').forEach(section => {
+    const visible_count = Array.from(section.querySelectorAll('.link-item'))
+        .filter(el => el.style.display !== 'none').length;
+    const link_label = visible_count === 1 ? 'link' : 'links';
+    section.querySelector('.section-count').textContent = visible_count + ' ' + link_label;
+    section.style.display = visible_count === 0 ? 'none' : '';
+  });
+});
+</script>
+
+{{ end }}

@@ -1,0 +1,23 @@
+category = "Personal"
+pinned = true
+
+[[link]]
+title = "Bobcat"
+url = "https://hadella.github.io/bobcat"
+desc = "This directory"
+added = "2026-03-23"
+tags = ["meta"]
+
+[[link]]
+title = "Darklane"
+url = "https://hadella.github.io/darklane"
+desc = "Darklane Theme Demo"
+added = "2026-03-23"
+tags = ["meta"]
+
+[[link]]
+title = "Showcase"
+url = "https://hadella.github.io/showcase"
+desc = "Showcase Theme Demo"
+added = "2026-03-23"
+tags = ["meta"]

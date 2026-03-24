@@ -1,0 +1,16 @@
+baseURL = 'https://hadella.github.io/bobcat'
+languageCode = 'en-us'
+title = 'Bobcat'
+
+disableKinds = ["taxonomy", "term"]
+
+[mediaTypes]
+  [mediaTypes."text/css"]
+    suffixes = ["css"]
+
+[outputFormats]
+  [outputFormats.CSS]
+    mediaType = "text/css"
+
+[outputs]
+    home = ["HTML", "JSON"]
