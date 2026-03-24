@@ -113,12 +113,14 @@ const items = document.querySelectorAll('.link-item');
 
 input.addEventListener('input', function() {
   const q = this.value.trim();
+  console.log('q:', JSON.stringify(q), 'length:', q.length);
   console.log('query:', q);
   if (!q) {
     items.forEach(el => el.style.display = '');
     document.querySelectorAll('.section').forEach(section => {
+      section.style.display = '';
       const total = section.querySelectorAll('.link-item').length;
-      const link_label = visible_count === 1 ? 'link' : 'links';
+      const link_label = total === 1 ? 'link' : 'links';
       section.querySelector('.section-count').textContent = total + ' ' + link_label;
     });
     count.textContent = '';
