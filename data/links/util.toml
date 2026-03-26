@@ -1,0 +1,15 @@
+category = 'Utility'
+
+[[link]]
+title = "HexEd.it"
+url = "https://hexed.it/"
+desc = "Online hex editor"
+added = "2026-03-24"
+tags = ["hex-editor"]
+
+[[link]]
+title = "Compiler Explorer"
+url = "https://www.godbolt.org/"
+desc = "Live compiler output and assembly view for many languages"
+added = "2026-03-24"
+tags = ["hex-editor"]

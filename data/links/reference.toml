@@ -1,0 +1,50 @@
+category = "Reference"
+
+[[link]]
+title = "p5js reference"
+url = "https://p5js.org/reference/"
+desc = "Find easy explanations for every piece of p5.js code"
+added = "2026-03-25"
+tags = ["p5js","js"]
+
+[[link]]
+title = "p5js sound reference"
+url = "https://p5js.org/reference/p5.sound/"
+desc = "Extend p5.js with Web Audio functionality including audio input, playback, analysis and synthesis."
+added = "2026-03-25"
+tags = ["p5js","js"]
+
+[[link]]
+title = "Processing.py"
+url = "https://py.processing.org/reference/"
+desc = "Processing.py Reference."
+added = "2026-03-25"
+tags = ["python","processing"]
+
+[[link]]
+title = "turtle"
+url = "https://docs.python.org/3/library/turtle.html"
+desc = "A python implementation of geometric drawing tools from Logo."
+added = "2026-03-25"
+tags = ["python","logo"]
+
+[[link]]
+title = "Markdown Guide"
+url = "https://www.markdownguide.org/basic-syntax/"
+desc = "Markdown Basic Syntax"
+added = "2026-03-24"
+tags = ["markdown"]
+
+[[link]]
+title = "Doxygen"
+url = "https://www.doxygen.nl/manual/docblocks.html"
+desc = "Documenting the code"
+added = "2026-03-25"
+tags = ["documentation"]
+
+[[link]]
+title = "Git Cheat Sheet"
+url = "https://git-scm.com/cheat-sheet"
+desc = "Git command quick reference"
+added = "2026-03-25"
+tags = ["git"]

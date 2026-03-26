@@ -1,0 +1,29 @@
+category = "Computer Graphics"
+
+[[link]]
+title = "Shadertoy"
+url = "https://www.shadertoy.com/"
+desc = "Browser-based GLSL shader editor and gallery"
+added = "2026-03-25"
+tags = ["shaders","computer-graphics"]
+
+[[link]]
+title = "Processing"
+url = "https://processing.org/"
+desc = "Processing is a flexible software sketchbook and a language for learning how to code"
+added = "2026-03-25"
+tags = ["processing","computer-graphics"]
+
+[[link]]
+title = "babylon.js"
+url = "https://www.babylonjs.com/"
+desc = "3D game and rendering engine for the web"
+added = "2026-03-25"
+tags = ["js","computer-graphics"]
+
+[[link]]
+title = "three.js"
+url = "https://threejs.org/"
+desc = "JavaScript 3D library, WebGL abstraction"
+added = "2026-03-25"
+tags = ["js","computer-graphics"]

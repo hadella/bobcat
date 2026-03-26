@@ -14,3 +14,6 @@ disableKinds = ["taxonomy", "term"]
 
 [outputs]
     home = ["HTML", "JSON"]
+
+[params]
+    preview_links = 12

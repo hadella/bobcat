@@ -1,0 +1,50 @@
+category = "Frameworks"
+
+[[link]]
+title = "raylib"
+url = "https://www.raylib.com/"
+desc = "raylib is a simple and easy-to-use library to enjoy videogames programming"
+added = "2026-03-25"
+tags = ["clang","game-programming"]
+
+[[link]]
+title = "Pygame-CE"
+url = "https://github.com/pygame-community/pygame-ce"
+desc = "Pygame is a free and open-source cross-platform library for the development of multimedia applications like video games using Python"
+added = "2026-03-25"
+tags = ["python","game-programming"]
+
+[[link]]
+title = "Allegro"
+url = "https://liballeg.org/"
+desc = "Allegro - A game programming library"
+added = "2026-03-25"
+tags = ["clang","game-programming"]
+
+[[link]]
+title = "SDL"
+url = "https://www.libsdl.org/"
+desc = "Simple DirectMedia Layer is a cross-platform development library"
+added = "2026-03-25"
+tags = ["clang","game-programming"]
+
+[[link]]
+title = "SFML"
+url = "https://www.sfml-dev.org/"
+desc = "Simple and Fast Multimedia Library"
+added = "2026-03-25"
+tags = ["c++","game-programming"]
+
+[[link]]
+title = "LÖVE"
+url = "https://love2d.org/"
+desc = "LÖVE is an *awesome* framework you can use to make 2D games in Lua"
+added = "2026-03-25"
+tags = ["lua","game-programming"]
+
+[[link]]
+title = "phaser"
+url = "https://phaser.io/"
+desc = "The Javascript game framework"
+added = "2026-03-25"
+tags = ["js","game-programming"]

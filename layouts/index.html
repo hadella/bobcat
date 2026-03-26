@@ -28,11 +28,26 @@
 {{ $rest = sort $rest "category" }}
 {{ $all := $pinned | append $rest }}
 
+{{ $total_links := 0 }}
+{{ range $all }}
+  {{ $total_links = add $total_links (len .link) }}
+{{ end }}
+
+{{ $dead_count := 0 }}
+{{ range $file, $errors := (getJSON "static/dead_links.json").error_map }}
+  {{ $dead_count = add $dead_count (len $errors) }}
+{{ end }}
+
 <header class="site-header">
   <span class="site-title">bobcat</span>
   <span class="search-row">
     <input type="text" id="search" placeholder="search links..." autocomplete="off" />
     <span id="search-count"></span>
+  </span>
+  <span class="site-stats">
+    Last updated: {{ now.Format "2006-01-02" }} ·
+    {{ $total_links }} {{ if eq $total_links 1 }}link{{ else }}links{{ end }} ·
+    {{ $dead_count }} dead
   </span>
 </header>
 
@@ -63,39 +78,33 @@
         <span class="section-title">{{ .category }}</span>
         <span class="section-count">{{ len .link }} links</span>
       </div>
+      {{ $limit := $.Site.Params.preview_links }}
+      {{ if .preview }}
+        {{ $limit = .preview }}
+      {{ end }}
+
       <div class="link-grid">
-        {{ range .link }}
-        <div class="link-item" data-title="{{ .title }}">
-          <a href="{{ .url }}">{{ .title }}</a>
-          {{ if index $dead .url }}
+        {{ range $i, $link := .link }}
+        <div class="link-item{{ if ge $i $limit }} link-hidden{{ end }}" data-title="{{ $link.title }}">
+          <a href="{{ $link.url }}">{{ $link.title }}</a>
+          {{ if index $dead $link.url }}
           <span class="skull" title="dead link">☠</span>
           {{ end }}
-          <div class="desc">{{ .desc }}</div>
+          <div class="desc">{{ $link.desc }}</div>
         </div>
         {{ end }}
       </div>
+
+      {{ if gt (len .link) $limit }}
+      <div class="show-more">
+        {{ sub (len .link) $limit }} more —
+        <a href="#" class="expand-links">show all</a>
+      </div>
+      {{ end }}
     </section>
     {{ end }}
   </main>
 </div>
-
-{{ $total_links := 0 }}
-{{ range $all }}
-  {{ $total_links = add $total_links (len .link) }}
-{{ end }}
-
-{{ $dead_count := 0 }}
-{{ range $file, $errors := (getJSON "static/dead_links.json").error_map }}
-  {{ $dead_count = add $dead_count (len $errors) }}
-{{ end }}
-
-<footer class="site-footer">
-  <span>Last updated: {{ now.Format "2006-01-02" }}</span>
-  <span>·</span>
-  <span>{{ $total_links }} {{ if eq $total_links 1 }}link{{ else }}links{{ end }}</span>
-  <span>·</span>
-  <span>{{ $dead_count }} dead</span>
-</footer>
 
 <script>
 const _categories = {{ $all | jsonify | safeJS }};
@@ -145,6 +154,17 @@ input.addEventListener('input', function() {
     const link_label = visible_count === 1 ? 'link' : 'links';
     section.querySelector('.section-count').textContent = visible_count + ' ' + link_label;
     section.style.display = visible_count === 0 ? 'none' : '';
+  });
+});
+
+document.querySelectorAll('.expand-links').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const section = this.closest('.section');
+    section.querySelectorAll('.link-hidden').forEach(el => {
+      el.classList.remove('link-hidden');
+    });
+    this.closest('.show-more').style.display = 'none';
   });
 });
 </script>
