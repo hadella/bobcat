@@ -2,7 +2,8 @@
 
 {{ $dead := dict }}
 {{ if fileExists "static/dead_links.json" }}
-  {{ $json := getJSON "static/dead_links.json" }}
+  {{ $content := readFile "static/dead_links.json" }}
+  {{ $json := $content | transform.Unmarshal }}
   {{ range $file, $errors := $json.error_map }}
     {{ range $errors }}
       {{ $dead = merge $dead (dict .url true) }}
@@ -34,8 +35,12 @@
 {{ end }}
 
 {{ $dead_count := 0 }}
-{{ range $file, $errors := (getJSON "static/dead_links.json").error_map }}
-  {{ $dead_count = add $dead_count (len $errors) }}
+{{ if fileExists "static/dead_links.json" }}
+  {{ $content := readFile "static/dead_links.json" }}
+  {{ $json := $content | transform.Unmarshal }}
+  {{ range $file, $errors := $json.error_map }}
+    {{ $dead_count = add $dead_count (len $errors) }}
+  {{ end }}
 {{ end }}
 
 <header class="site-header">
