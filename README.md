@@ -1,8 +1,10 @@
-# Bobcat
+# bobcat
 
 A personal web directory in the spirit of late-90s link directories like Yahoo! and DMOZ.
 Built with Hugo, deployed via GitHub Pages. No database, no CMS, no algorithmic curation —
 just a hand-maintained collection of links you actually want to find again.
+
+**[hadella.github.io/bobcat](https://hadella.github.io/bobcat)**
 
 ## Why
 
@@ -18,7 +20,8 @@ navigation before search engines took over.
 - All links stored as TOML data files — no HTML editing required
 - Pinned category for personal/meta links
 - Recently added sidebar section
-- Footer with link count and last built date
+- Header with total link count and last built date
+- Per-category link preview limit with expand
 
 ## Adding Links
 
@@ -37,19 +40,16 @@ tags = ["tag1", "tag2"]
 To pin a category to the top of the sidebar add `pinned = true` after the category name.
 All other categories sort alphabetically.
 
-### Subcategories
-
-For large categories that aren't ready to split into separate files yet, add an optional
-`subcategory` field to group links within a section:
+To limit how many links are shown by default in a category, add `preview = N`:
 ```toml
-[[link]]
-title = "Rust Ownership"
-url = "https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html"
-desc = "Chapter 4 of the book"
-added = "2026-03-23"
-subcategory = "Rust"
-tags = ["rust"]
+category = "Category Name"
+preview = 5
 ```
+
+The global default is set via `preview_links` in `hugo.toml`. Links beyond the limit are
+hidden but still searchable — a "show all" link expands the section inline.
+
+### Splitting categories
 
 When a category gets too big, split it into multiple files:
 ```
@@ -74,6 +74,9 @@ This builds the site, runs lychee against the output, writes dead URLs to
 `static/dead_links.json`, then rebuilds so skulls appear next to flagged links.
 Run this occasionally — there's no automation, just a manual audit when you care.
 
+Some sites block automated requests and will show as dead incorrectly. Add them to the
+`--exclude` list in the Makefile as needed.
+
 ## Local Development
 ```bash
 make serve    # start local dev server
@@ -83,7 +86,8 @@ make check    # audit links and rebuild
 
 ## Deployment
 
-GitHub Actions deploys to GitHub Pages on push to main. See `.github/workflows/deploy.yml`.
+Push to main — GitHub Actions builds and deploys to GitHub Pages automatically.
+See `.github/workflows/deploy.yml`.
 
 ## Stack
 
