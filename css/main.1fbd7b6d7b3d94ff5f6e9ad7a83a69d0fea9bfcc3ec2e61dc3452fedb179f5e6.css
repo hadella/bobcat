@@ -12,26 +12,69 @@
 /* =============================================
    custom properties
    ============================================= */
-:root {
-    /* backgrounds */
-    --color-bg: #fff;
-    --color-bg-header: #e8e8e8;
-    --color-bg-sidebar: #f5f5f5;
 
-    /* borders */
-    --color-border: #ccc;
-
-    /* text */
-    --color-text: #000;
+/* sepia light theme */
+[data-theme="light"] {
+    --color-bg: #f5f2e8;
+    --color-bg-header: #ddd8c8;
+    --color-bg-sidebar: #ede9de;
+    --color-border: #c8c4b8;
+    --color-section-title: #3a2010;
+    --color-text: #1a1a1a;
     --color-text-muted: #666;
     --color-text-desc: #444;
+    --color-theme-toggle: #666;
+    --color-accent: #3a2010;
+    --color-link: #7a4f2a;
+    --color-link-visited: #3d2510;
+    --color-input-bg: #ede9de;
+    --color-input-text: #1a1a1a;
+}
 
-    /* accent - used for titles and skull icon */
-    --color-accent: #09225c;
+/* yahoo-inspired light theme */
+/*[data-theme="light"] {
+    --color-bg: #f0f4f8;
+    --color-bg-header: #c5d8ec;
+    --color-bg-sidebar: #dce8f0;
+    --color-border: #a8c0d6;
+    --color-text: #1a1a2e;
+    --color-text-muted: #5a6a7a;
+    --color-text-desc: #4a5a6a;
+    --color-theme-toggle: #8a9aaa;
+    --color-accent: #1a4a7a;
+    --color-section-title: #1a4a7a;
+    --color-link: #1a4a7a;
+    --color-link-visited: #6a3a8a;
+    --color-input-bg: #e4eef6;
+    --color-input-text: #1a1a2e;
+}*/
 
-    /* links */
-    --color-link: #00c;
-    --color-link-visited: #551a8b;
+[data-theme="dark"] {
+    --color-bg: #14181d;
+    --color-bg-header: #0a0f14;
+    --color-bg-sidebar: #11151c;
+    --color-border: #2a3340;
+    --color-section-title: #e6e6e6;
+    --color-text: #c7c7c7;
+    --color-text-muted: #ff8f40;
+    --color-text-desc: #bbb;
+    --color-theme-toggle: #555;
+    --color-accent: #39bae6;
+    --color-link: #39bae6;
+    --color-link-visited: #26a98b;
+    --color-input-bg: #1a1f26;
+    --color-input-text: #c7c7c7;
+}
+
+/* theme toggle button */
+#theme-toggle {
+    margin-left: auto;
+    background: none;
+    border: none; /*1px solid var(--color-border);*/
+    cursor: pointer;
+    font-size: 11px;
+    padding: 0;
+    color: var(--color-theme-toggle);
 }
 
 /* =============================================
@@ -88,6 +131,13 @@ body {
     padding: 3px 6px;
     border: 1px solid var(--color-border);
     width: 240px;
+    background: var(--color-input-bg);
+    color: var(--color-input-text);
+}
+
+.search-row input:focus {
+    outline: none;
+    border: 1px solid var(--color-border);
 }
 
 #search-count {
@@ -168,7 +218,7 @@ body {
 .section-title {
     font-size: 13px;
     font-weight: bold;
-    color: var(--color-accent);
+    color: var(--color-section-title);
 }
 
 .section-count {
