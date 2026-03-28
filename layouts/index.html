@@ -54,6 +54,7 @@
     {{ $total_links }} {{ if eq $total_links 1 }}link{{ else }}links{{ end }} ·
     {{ $dead_count }} dead
   </span>
+  <button id="theme-toggle" title="Toggle dark mode">[dark]</button>
 </header>
 
 <div class="layout">
@@ -171,6 +172,19 @@ document.querySelectorAll('.expand-links').forEach(link => {
     });
     this.closest('.show-more').style.display = 'none';
   });
+});
+
+const toggle = document.getElementById('theme-toggle');
+const saved_theme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', saved_theme);
+toggle.textContent = saved_theme === 'dark' ? '[dark]' : '[light]';
+
+toggle.addEventListener('click', function() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  this.textContent = next === 'dark' ? '[dark]' : '[light]';
 });
 </script>
 
